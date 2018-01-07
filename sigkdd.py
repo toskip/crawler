@@ -1,7 +1,10 @@
-#encoding:utf-8
+# coding: utf-8
+threadnum = 5
 from urllib import request
 from bs4 import BeautifulSoup
+from Queue import Queue
 import os
+import threading
 def replace_invalid_filename_char(filename, replaced_char='_'):
     '''Replace the invalid characaters in the filename with specified characater.
     The default replaced characater is '_'.
@@ -15,6 +18,8 @@ def replace_invalid_filename_char(filename, replaced_char='_'):
         valid_filename = valid_filename.replace(c, replaced_char)
 
     return valid_filename 
+url_queue = Queue()
+pdf_queue = Queue()
 page = request.urlopen(r'http://www.kdd.org/kdd2017/accepted-papers').read()
 soup = BeautifulSoup(page,'lxml')
 names = soup.find_all('h4')
@@ -23,18 +28,21 @@ for i in range(4):
     links = tables[i].find_all('a')
     if not (os.path.exists(names[i].string)): os.mkdir(names[i].string)
     for j in range(len(links)):
-        page = request.urlopen(links[j].get('href')).read()
-        soup = BeautifulSoup(page,'lxml')
-        link = soup.find(target="_blank")
-        headers = {
-            'User-Agent': r'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
-            'Referer':links[j],
-            'Connection': 'keep-alive'
-        }
-        req = request.Request('https://dl.acm.org/authorize?'+link.get('href').split('?')[1],headers =headers)
-        page = request.urlopen(req).read()
-        soup= BeautifulSoup(page,'lxml')
-        pdf = soup.find_all('noscript')[1].p.a.get('href')
-        req = request.Request(pdf)
-        open(names[i].string+'/'+replace_invalid_filename_char(links[j].get_text())+'.pdf','wb').write(request.urlopen(req).read())
-        print("正在下载第%d个表格的第%d篇文章"%(i+1,j+1))
+        try:
+            page = request.urlopen(links[j].get('href')).read()
+            soup = BeautifulSoup(page,'lxml')
+            link = soup.find(target="_blank")
+            headers = {
+                'User-Agent': r'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0',
+                'Referer':links[j],
+                'Connection': 'keep-alive'
+            }
+            req = request.Request('https://dl.acm.org/authorize?'+link.get('href').split('?')[1],headers =headers)
+            page = request.urlopen(req).read()
+            soup= BeautifulSoup(page,'lxml')
+            pdf = soup.find_all('noscript')[1].p.a.get('href')
+            req = request.Request(pdf)
+            open(names[i].string+'/'+replace_invalid_filename_char(links[j].get_text())+'.pdf','wb').write(request.urlopen(req).read())
+            print("正在下载第%d个表格的第%d篇文章"%(i+1,j+1))
+        except:
+            print("第%d个表格的第%d篇文章下载错误"%(i+1,j+1),file=sys.stderr)
