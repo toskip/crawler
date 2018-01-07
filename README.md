@@ -1,2 +1,4 @@
 # sigkdd2017crawler
-sigkdd2017
+python3
+* dependency
+BeautifulSoup4
