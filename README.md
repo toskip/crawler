@@ -2,4 +2,4 @@
 python3
 * dependency: BeautifulSoup4
 
-implementing multithread
+18/01/07:multiprocessing completed
