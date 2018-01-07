@@ -1,3 +1,3 @@
-# sigkdd2017crawler
+# sigkdd2017papercrawler
 python3
 * dependency: BeautifulSoup4
