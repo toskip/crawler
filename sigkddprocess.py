@@ -1,5 +1,5 @@
 # coding: utf-8
-#多进程爬取
+#多进程
 from urllib import request
 from bs4 import BeautifulSoup
 from multiprocessing import Process, Queue,cpu_count
@@ -26,7 +26,7 @@ def download(processnum,q):
         except:
             print('进程%s已停止'%(processnum))
             break
-        for i in range(3):
+        for k in range(3):
             try:
                 page = request.urlopen(url).read()
                 soup = BeautifulSoup(page,'lxml')
@@ -58,14 +58,14 @@ if __name__=='__main__':
     soup = BeautifulSoup(page,'lxml')
     names = soup.find_all('h4')
     tables = soup.find_all('table')
-    for i in range(4):
+    for i in range(1):
         links = tables[i].find_all('a')
         if not os.path.exists(names[i].string): os.mkdir(names[i].string)
         for j in range(len(links)):
             q.put((i,j,names[i].string,links[j].get_text(),links[j].get('href')))
     #启动多进程
     #threadnum = cpu_count()
-    threadnum = 16 #随便设
+    threadnum = 8 #随便设
     p = []
     print('开始下载,进程数%d'%(threadnum))
     for i in range(threadnum):
