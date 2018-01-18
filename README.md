@@ -6,4 +6,4 @@ python3
 
 18/01/09:multithread completed
 
-multiprocessing is a little bit faster but the queue used to share urls among processes is wierd
+multiprocessing is a little bit faster but the queue used to share urls among processes is weird
