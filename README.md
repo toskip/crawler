@@ -6,4 +6,4 @@ python3
 
 18/01/09:multithread completed
 
-速度上多进程略快一点点，然而进程共享队列用起来有点诡异，一堆坑，搞不懂怎么实现的
+multiprocessing is a little bit faster but the queue used to share urls among processes is wierd
