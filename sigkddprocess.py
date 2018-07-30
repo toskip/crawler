@@ -49,7 +49,7 @@ def download(processnum,q):
 if __name__=='__main__':
     '''
     解除递归限制，不加这句队列会出问题
-    感谢 http://lovenight.github.io/2015/11/12/Python%20Queue%E7%9A%84RecursionError%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/ 提供解决方案
+    http://lovenight.github.io/2015/11/12/Python%20Queue%E7%9A%84RecursionError%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/ 提供解决方案
     '''
     starttime =time.time()
     sys.setrecursionlimit(1000000) 
