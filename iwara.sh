@@ -33,7 +33,7 @@ do
     curl -s -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36' -O $url &
   done
   wait
-  #抓太快会封一个小时ip，具体阈值没测过
+  #抓太快会封一个小时ip，具体阈值应该在这附近
   sleep 3
   echo finish batch $i
 done
