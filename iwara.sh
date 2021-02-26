@@ -34,6 +34,6 @@ do
   done
   wait
   #抓太快会封一个小时ip，具体阈值没测过
-  sleep 5
+  sleep 3
   echo finish batch $i
 done
