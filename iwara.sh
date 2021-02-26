@@ -1,10 +1,12 @@
 #列表页
 mkdir list
 cd list
+#batch数
 for i in {0..99}
 do
   date +'%Y-%m-%d %H:%M:%S'
   echo start batch $i
+  #并发数
   for j in {0..19}
   do
     k=$((i*20+j))
