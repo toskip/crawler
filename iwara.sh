@@ -36,6 +36,7 @@ do
   done
   wait
   #抓太快会封一个小时ip，应该有两个状态，第一个状态会限制访问频率，第二个直接拉黑，这个频率刚好没进入第一个
+  #对单个ip是这样，如果有ip池就随便浪了
   sleep 3
   echo finish batch $i
 done
